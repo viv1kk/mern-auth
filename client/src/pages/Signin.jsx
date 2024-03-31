@@ -66,7 +66,7 @@ const Signin = () => {
           <span className="text-blue-500">Sign up</span>
         </Link>
       </div>
-      <p className='text-red-700 mt-5'>{error ? error.message || "Something went wrong!": ""}</p>
+      <p className='text-red-700 mt-5'>{error ? error.error || 'Something went wrong!' : ''}</p>
     </div>
   )
 }
