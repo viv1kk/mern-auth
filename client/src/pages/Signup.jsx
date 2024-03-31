@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 
 const Signup = () => {
   const [formData, setFormData] = useState({})
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
 
   const handleChange = (e)=>{
     setFormData({ ...formData, [e.target.id] : e.target.value})
@@ -25,9 +26,12 @@ const Signup = () => {
       })
       const data = await res.json()
       setLoading(false)
-      if(data.success === false)
+      if(data.success === false){
         setError(true)
-      console.log(data)
+        return
+      }
+      navigate('/sign-in')
+      // console.log(data)
     } catch(error){
       setLoading(false)
       setError(true)
@@ -42,7 +46,7 @@ const Signup = () => {
         <input type="email" id="email" placeholder="Email" className='bg-slate-100 p-3 rounded-lg' onChange={handleChange}/>
         <input type="password" id="password" placeholder="Password" className='bg-slate-100 p-3 rounded-lg' onChange={handleChange}/>
         <button disabled={loading} className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
-          {loading ? "Loading..." : "Signup"}
+          {loading ? "Loading..." : "Sign up"}
         </button>
       </form>
       <div className="flex gap-2 mt-5">
