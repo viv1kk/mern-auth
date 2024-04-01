@@ -25,7 +25,6 @@ export const updateUser = async(req, res, next)=>{
                 profilePicture : req.body.profilePicture
             }
         }, {new : true})
-        console.log(updateUser._doc)
         const {password, ...rest} = updatedUser._doc
         res.status(200).json(rest)
     }
