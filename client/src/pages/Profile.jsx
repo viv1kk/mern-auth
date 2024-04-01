@@ -3,7 +3,7 @@ import { useRef, useState, useEffect } from 'react'
 import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/storage'
 import {app} from '../firebase'
 import { useDispatch } from 'react-redux'
-import { deleteUserFailure, deleteUserStart, deleteUserSuccess, updateUserFailure, updateUserStart, updateUserSuccess } from '../redux/user/userSlice'
+import { deleteUserFailure, deleteUserStart, deleteUserSuccess, signout, updateUserFailure, updateUserStart, updateUserSuccess } from '../redux/user/userSlice'
 
 const Profile = () => {
   const fileRef = useRef(null)
@@ -93,6 +93,15 @@ const Profile = () => {
     }
   }
 
+  const handleSignout = async()=>{
+    try{
+      await fetch('/api/user/signout');
+      dispatch(signout())
+    }
+    catch(error){
+      console.log(error)
+    }
+  }
 
   // console.log(formData)
   return (
@@ -134,7 +143,7 @@ const Profile = () => {
       </form>
       <div className='flex justify-between mt-5'>
         <span onClick={handleDeleteAccount} className='text-red-700 cursor-pointer'>Delete Account</span>
-        <span className='text-red-700 cursor-pointer'>Signout</span>
+        <span onClick={handleSignout} className='text-red-700 cursor-pointer'>Signout</span>
       </div>
       <p className='text-red-700 mt-5'>{error && 'Something went wrong'}</p>
       <p className='text-green-700 mt-5'>{updateSuccess && 'User is updated Successfully'}</p>
